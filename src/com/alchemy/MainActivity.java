@@ -23,6 +23,7 @@ import android.util.DisplayMetrics;
 
 public class MainActivity extends BaseGameActivity { //glowna aktywnosc
 //test
+	//test wojtek
  
     public int 	w = 2,
                	h = 4,
