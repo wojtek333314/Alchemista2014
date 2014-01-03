@@ -26,6 +26,7 @@ public class MainActivity extends BaseGameActivity { //glowna aktywnosc
 	//test wojtek
  
 	//test 2 232
+	//Brotherhood!
     public int 	w = 2,
                	h = 4,
              	ID = 0,
