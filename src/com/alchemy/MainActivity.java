@@ -22,7 +22,7 @@ import android.util.DisplayMetrics;
 
 
 public class MainActivity extends BaseGameActivity { //glowna aktywnosc
-
+//test
  
     public int 	w = 2,
                	h = 4,
