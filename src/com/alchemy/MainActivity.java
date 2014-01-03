@@ -24,7 +24,7 @@ import android.util.DisplayMetrics;
 public class MainActivity extends BaseGameActivity { //glowna aktywnosc
 //test
 	//test wojtek
- //hdvxz
+ //hdvxzdwqdqwdw
 	//test 2 232
 	//Brotherhood!
     public int 	w = 2,
