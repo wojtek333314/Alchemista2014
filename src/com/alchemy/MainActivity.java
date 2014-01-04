@@ -21,16 +21,13 @@ import android.graphics.Color;
 import android.util.DisplayMetrics;
 
 
-public class MainActivity extends BaseGameActivity { //glowna aktywnosc
-//test
-	//test wojtek
- //hdvxzdwqdqwdw
-	//test 2 232
-	//Brotherhood!
+public class MainActivity extends BaseGameActivity 
+{
     public int 	w = 2,
                	h = 4,
              	ID = 0,
-             	Move = 0; // if 0 wychodzi z aplikacji, 1
+             	Move = 0; // if 0 wychodzi z aplikacji
+    
     public Font 				mFont; //czcionka do pisania na ekranie
     public Camera 				mCamera ;//uchwyt do kamery
     public Scene 				mCurrentScene; //uchwyt do obecnie aktywnej sceny
@@ -40,11 +37,12 @@ public class MainActivity extends BaseGameActivity { //glowna aktywnosc
     boolean 					GRun = false;
     boolean 					TimerRun = false;
     KONTENER					kon;
+    Back 						back;
 	
     @Override
     public void onBackPressed()
     {
-    	super.onBackPressed();
+    	back.b();
     }
     
 	@Override
@@ -81,10 +79,13 @@ public class MainActivity extends BaseGameActivity { //glowna aktywnosc
     	  BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");//ustawiam sciezke dla plikow grafiki Assets/gfx/
     	  SoundFactory.setAssetBasePath("sfx/");
     	  MusicFactory.setAssetBasePath("sfx/");  
+    	  
+    	  kon = new KONTENER();
+    	  back = new Back();
     }
 
-
-    protected Scene onCreateScenemoje() {
+    protected Scene onCreateScenemoje() 
+    {
         return mCurrentScene;
     }
     
@@ -100,14 +101,11 @@ public class MainActivity extends BaseGameActivity { //glowna aktywnosc
         return (MainActivity) instance;
     }
 
-
-  
-
-
     
 	@Override
 	public void onCreateResources(
-			OnCreateResourcesCallback pOnCreateResourcesCallback) {
+			OnCreateResourcesCallback pOnCreateResourcesCallback) 
+	{
 		onCreateResourcesmoje();
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 		
@@ -115,7 +113,8 @@ public class MainActivity extends BaseGameActivity { //glowna aktywnosc
 
 
 	@Override
-	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
+	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) 
+	{
 
 		this.setCurrentScene(new Menu());
 		 pOnCreateSceneCallback.onCreateSceneFinished(mCurrentScene);
@@ -126,14 +125,15 @@ public class MainActivity extends BaseGameActivity { //glowna aktywnosc
 	
 	@Override
 	public void onPopulateScene(Scene pScene,
-			OnPopulateSceneCallback pOnPopulateSceneCallback) {
+			OnPopulateSceneCallback pOnPopulateSceneCallback) 
+	{
 		 pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 	
-
-
-
-    public void setCurrentScene(Scene scene) {//zmienia aktywn¹ scenê
+	
+	
+    public void setCurrentScene(Scene scene) 
+    {//zmienia aktywn¹ scenê
   	  //System.gc();
 	  this.mCurrentScene = scene;
       getEngine().setScene(mCurrentScene);
