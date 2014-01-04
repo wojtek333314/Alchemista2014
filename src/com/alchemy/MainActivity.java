@@ -39,6 +39,9 @@ public class MainActivity extends BaseGameActivity
     KONTENER					kon;
     Back 						back;
 	
+    _Mozdzierz					mozdzierz;	//referencja do mozdzierza
+    _Kociol						kociol;		//referencja do mozdzierza
+    _SkladnikiListaGra			lista;      //referencja do listy skladnikow w grze
     @Override
     public void onBackPressed()
     {

@@ -12,7 +12,7 @@ public class KONTENER
 	Color[] wywar_color;
 	Color[] olej_color;
 	Color	zielony,pomaranczowy,czerwony,bialy,zolty,czarny,niebieski,blekitny,bordowy,fioletowy;
-	
+
 	KONTENER()
 	{
 		act = MainActivity.getSharedInstance();
@@ -20,7 +20,9 @@ public class KONTENER
 		h   = act.h;
 		
 		kolory();
+		
 	}
+	
 	
 	void kolory()
 	{

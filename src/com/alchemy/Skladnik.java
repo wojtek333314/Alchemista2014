@@ -16,7 +16,8 @@ public class Skladnik
 	TiledSprite		tiled;			//podzielony na 3 czesci obiekt.(gfx/Items/file_path_1.png) 512x128
 	
 	boolean			mozdzierz,		//czy moze byc rozdrabniany.
-					draging;		//czy mozna przesuwac przy dotknieciu(domyslnie true)
+					draging,		//czy mozna przesuwac przy dotknieciu(domyslnie true)
+					mozdzierz_in;	//zmienna ktora jest true jesli item znajduje sie w slocie w mozdzierzu
 	short			kolor;			//0-nigredo,1 rubedo,2 neutral,3 nitricostam,4 albedo,jesli nie posiada to -1
 	int				e_lek,			//efekt leczniczy
 					e_tru,			//efekt trujacy
@@ -25,7 +26,7 @@ public class Skladnik
 					e_mag,			//efekt magiczny (0-lykan,1-wampiryzm,2-szczescie,3-milosc, -1 brak efektu)
 					rozdrobnienie,  //aktualny stan rozdrobnienia(jednoczesnie wczytana tekstura dla "tiled")
 					kolor_light;	//"œwietlnoœæ" koloru.  przedzial <-1,1> stan podstawowy, <-3 nigredo, >3 albedo wszystko w dokumentacji
-	
+	float			StartX,StartY;	//pozycja tiled do ktorej ma wracac jesli item upuszczony
 	private FileRead	filereader;	//zawiera tablice z odczytanymi liniami pliku
 	private _Kociol		kociol;
 	private _Mozdzierz 	_mozdzierz;
@@ -45,6 +46,17 @@ public class Skladnik
 		grafika();
 		wlasciwosci();
 	}
+
+	void tiledSetScaleOnList()//resetuje skale zeby zgadzala sie wysokosc na liscie
+	{
+		tiled.setScale(act.lista.ramka.getHeightScaled()/tiled.getHeight());
+	}
+	
+	void setStartPosition(float x,float y)
+	{
+		StartX = x;
+		StartY = y;
+	}
 	
 	private void stringi()
 	{
@@ -56,6 +68,21 @@ public class Skladnik
 	{
 		return this;
 	}
+	
+	void removeFromSlot()
+	{
+		mozdzierz_in = false;
+		tiledSetScaleOnList();
+		tiled.setCurrentTileIndex(0);
+		tiled.setPosition(StartX,StartY);
+	}
+	void addToSlot()
+	{
+		mozdzierz_in = true;
+		tiled.setSize(_mozdzierz.getWidthScaled(),_mozdzierz.getHeightScaled());
+		tiled.setPosition(_mozdzierz.slot.getX(),_mozdzierz.slot.getY());
+	}
+	
 	private void grafika()
 	{
 		ikona = new Sprite(0,0,new stb("Items/"+file_path+"_0",128,128).T,act.getVertexBufferObjectManager());
@@ -77,26 +104,37 @@ public class Skladnik
 						_mozdzierz.mozna_tluc = true;
 				}
 				
-				if(ev.isActionUp())
+				if(ev.isActionUp() || ev.isActionCancel() || ev.isActionOutside())
 				{
 					//opisana elipsa(gora dol) przez kolizje AABB:
 					if(ev.getY()+this.getHeightScaled()/2 > ( kociol.getY())+(67/512)*kociol.getHeightScaled() && ev.getY()+this.getHeightScaled()/2 < (kociol.getY()+kociol.getHeightScaled() -(370/512)*kociol.getHeightScaled())
 							&& ev.getX()+this.getWidthScaled()/2 > kociol.getX() && ev.getX()+this.getWidthScaled()/2 < kociol.getWidthScaled()+kociol.getX())
 					{
-						System.out.println("!!");
 						//TODO co po dodaniu itema
+						System.out.println("fas");
+						this.setPosition(StartX, StartY);	
 						kociol.dodaj_skladnik(getThis());
+						return false;
 					}
 					
 					if(this.collidesWith(_mozdzierz))
 					{
+						getThis().setStartPosition(StartX, StartY);
 						_mozdzierz.wrzuc_do_mozdzierza(getThis());
-					}
+						addToSlot();
+						return false;
+					}	
+					
+					if(mozdzierz_in)
+						removeFromSlot();
+					
+					this.setPosition(StartX, StartY);				
 				}
 				
 				return false;
 			}
 		};
+		tiled.setScaleCenter(0, 0);
 	}
 	
 	private void wlasciwosci()

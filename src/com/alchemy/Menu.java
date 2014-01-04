@@ -341,6 +341,7 @@ public class Menu extends Scene
 				if(pEvent.isActionDown())
 				{
 					//TODO odpalanie gry
+					act.setCurrentScene(new test());
 					return true;
 				}
 				return false;

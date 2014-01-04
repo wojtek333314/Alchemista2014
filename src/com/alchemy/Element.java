@@ -58,6 +58,8 @@ public class Element//sluzy do wazenia mikstur,na jego podstawie mozna stworzyc 
 		if(moze_dodac_skladnik == false) return;
 		
 		ingredient.add(skladnik);
+		skladnik.tiled.setCurrentTileIndex(0);
+		skladnik.tiledSetScaleOnList();
 		moze_dodac_skladnik = false;
 		//wzmocnienie lub oslabienie:
 	  	if(efkt_ostatni != -1 && (skladnik.e_wzm > 0 || skladnik.e_osl > 0)) 
@@ -92,7 +94,7 @@ public class Element//sluzy do wazenia mikstur,na jego podstawie mozna stworzyc 
 		if(typ==2) color = act.kon.wywar_color[this.stan_koloru];
 		if(typ==3) color = act.kon.olej_color[this.stan_koloru];
 		
-		System.out.println("O!");
+		System.out.println("dodano skladnik");
 		plyn.registerEntityModifier(new ColorModifier(szybkosc_reakcji,plyn.getColor(),color)
 		{
 			   @Override
